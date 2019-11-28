@@ -6,8 +6,7 @@
 using namespace std;
 using namespace cv;
 
-#include "Model.hpp"
-
+template <class Model>
 class RANSAC {
   public:
     RANSAC(vector<Point> &data) :

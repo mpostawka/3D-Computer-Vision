@@ -1,6 +1,8 @@
 #include "RANSAC.hpp"
+#include "Model.hpp"
 
-Model RANSAC::findModel() {
+template <class Model>
+Model RANSAC<Model>::findModel() {
     int bestInlierCount = 0;
     Model bestModel;
     for(int iter = 0; iter < iterations; iter++) {
@@ -16,3 +18,5 @@ Model RANSAC::findModel() {
     }
     return bestModel;
 }
+
+template class RANSAC<Circle>;

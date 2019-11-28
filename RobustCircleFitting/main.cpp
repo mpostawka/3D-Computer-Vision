@@ -30,9 +30,13 @@ int main(int argc, char **argv) {
         point.y = matrix.data[2 * i + 1];
         points.push_back(point);
     }
+    Point2f A(-2.0f, 1.0f);
+    Point2f B(1.0f, 1.0f);
+    Point2f C(-0.5f, 2.5f);
 
-    RANSAC ransac(points);
+    Circle c = Circle(A, B, C);
 
+    RANSAC<Circle> ransac(points);
     Circle model = ransac.findModel();
     
 
