@@ -1,12 +1,12 @@
 #include "RANSAC.hpp"
 #include "Model.hpp"
 
-template <class Model>
-Model RANSAC<Model>::findModel() {
+template <class Shape>
+Shape RANSAC<Shape>::findModel() {
     int bestInlierCount = 0;
-    Model bestModel;
+    Shape bestModel;
     for(int iter = 0; iter < iterations; iter++) {
-        Model model = Model(measurements); // Get random sample
+        Shape model(measurements); // Get random sample
         int inlierCount = 0;
         for(const auto& point : measurements)
             if(model.distance(point) <= threshold)

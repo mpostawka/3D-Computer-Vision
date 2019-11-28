@@ -11,6 +11,7 @@ class Model {
     Model();
     Model(const vector<Point>& points);
     virtual float distance(Point);
+    virtual void describe();
 };
 
 class Circle : public Model {
@@ -19,6 +20,10 @@ class Circle : public Model {
     Circle(const Point2f& A, const Point2f& B, const Point2f& C);
     Circle(const vector<Point>& points);
     float distance(Point) override;
+    void describe() override;
+    Point2f center();
+    float size();
+    void draw(Mat image);
   private:
     float x, y, radius;
 };

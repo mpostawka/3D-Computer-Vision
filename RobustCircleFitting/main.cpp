@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -17,6 +19,7 @@ const char *window_name = "floating";
 int main(int argc, char **argv) {
     if (argc < 2)
         return -1;
+    srand(time(nullptr));
     string number = static_cast<string>(argv[1]);
     MatrixReaderWriter matrix("data/points" + number + ".txt");
     Mat image = imread("data/image" + number + ".png");
@@ -30,20 +33,16 @@ int main(int argc, char **argv) {
         point.y = matrix.data[2 * i + 1];
         points.push_back(point);
     }
-    Point2f A(-2.0f, 1.0f);
-    Point2f B(1.0f, 1.0f);
-    Point2f C(-0.5f, 2.5f);
-
-    Circle c = Circle(A, B, C);
 
     RANSAC<Circle> ransac(points);
     Circle model = ransac.findModel();
+    model.draw(image);
     
 
     namedWindow(window_name, WINDOW_AUTOSIZE);
-    for (const auto &point : points) {
-        circle(image, point, 3, Scalar(255, 0, 0), 8);
-    }
+    // for (const auto &point : points) {
+    //     circle(image, point, 3, Scalar(255, 0, 0), 8);
+    // }
     Mat view;
     resize(image, view, Size(0, 0), 0.25f, 0.25f);
     imshow(window_name, view);

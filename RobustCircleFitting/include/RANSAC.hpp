@@ -6,14 +6,14 @@
 using namespace std;
 using namespace cv;
 
-template <class Model>
+template <class Shape>
 class RANSAC {
   public:
     RANSAC(vector<Point> &data) :
       iterations(1000), threshold(12.0f) {
         measurements = data;
     };
-    Model findModel();
+    Shape findModel();
   private:
     int iterations;
     float threshold;
