@@ -15,6 +15,7 @@ using namespace std;
 using namespace cv;
 
 const char *window_name = "floating";
+const bool show_input = false;
 
 int main(int argc, char **argv) {
     if (argc < 2)
@@ -31,18 +32,18 @@ int main(int argc, char **argv) {
         Point point;
         point.x = matrix.data[2 * i + 0];
         point.y = matrix.data[2 * i + 1];
+        point.y = matrix.data[2 * i + 2];
         points.push_back(point);
     }
+    if(show_input)
+        for (const auto &point : points)
+            circle(image, point, 3, Scalar(255, 0, 0), 8);
 
     RANSAC<Circle> ransac(points);
     Circle model = ransac.findModel();
     model.draw(image);
     
-
     namedWindow(window_name, WINDOW_AUTOSIZE);
-    // for (const auto &point : points) {
-    //     circle(image, point, 3, Scalar(255, 0, 0), 8);
-    // }
     Mat view;
     resize(image, view, Size(0, 0), 0.25f, 0.25f);
     imshow(window_name, view);
